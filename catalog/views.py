@@ -1,13 +1,13 @@
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponseRedirect, HttpRequest
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
-from catalog.forms import TaskSearchForm
+from catalog.forms import TaskSearchForm, TaskForm
 from catalog.models import Tag, Task
 
 
-def index(request: HttpRequest) -> HttpResponse:
-    return render(request, "catalog/task_list.html")
+def home_redirect(request: HttpRequest) -> HttpResponseRedirect:
+    return HttpResponseRedirect(reverse("catalog:task-list"))
 
 
 class TaskListView(generic.ListView):
@@ -27,6 +27,12 @@ class TaskListView(generic.ListView):
         content = self.request.GET.get("content", "")
         context["form"] = TaskSearchForm(initial={"content": content})
         return context
+
+
+class TaskCreateView(generic.CreateView):
+    model = Task
+    form_class = TaskForm
+    success_url = reverse_lazy("catalog:task-list")
 
 
 class TagListView(generic.ListView):

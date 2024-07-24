@@ -4,7 +4,7 @@
 {% block content %}
   <h1>
     TODO List
-    <a href="#" class="btn btn-primary" style="float: right">Add task</a>
+    <a href="{% url 'catalog:task-create' %}" class="btn btn-primary" style="float: right">Add task</a>
   </h1>
   <br>
   <form method="get" action="">

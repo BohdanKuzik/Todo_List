@@ -2,47 +2,49 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <h1>
-    TODO List
-    <a href="{% url 'catalog:task-create' %}" class="btn btn-primary" style="float: right">Add task</a>
-  </h1>
-  <br>
-  <form method="get" action="">
-    {{ form|crispy }}
-  </form>
-  <div class="tasks-block">
-    {% for task in task_list %}
-      <div class="task">
-        <h4>
-          {{ task }}
-          {% if task.is_done %}
-            <span style="color: green">Done</span>
-            <a href="{% url "catalog:toggle-complete" task.id %}" class="btn btn-secondary" style="float: right">Undo</a>
-          {% else %}
-            <span style="color: red">
-              Not done
-              {% if task.is_past_deadline %}
-                | Past deadline!
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="mb-0">TODO List</h1>
+      <a href="{% url 'catalog:task-create' %}" class="btn btn-primary">Add Task</a>
+    </div>
+
+    <form method="get" action="" class="mb-4">
+      {{ form|crispy }}
+    </form>
+
+    <div class="list-group">
+      {% for task in task_list %}
+        <div class="list-group-item list-group-item-action mb-2">
+          <div class="d-flex w-100 justify-content-between">
+            <h4 class="mb-1">
+              {{ task }}
+              {% if task.is_done %}
+                <span class="badge badge-success">Done</span>
+                <a href="{% url 'catalog:toggle-complete' task.id %}" class="btn btn-outline-secondary btn-sm ml-2">Undo</a>
+              {% else %}
+                <span class="badge badge-danger">Not done{% if task.is_past_deadline %} | Past deadline!{% endif %}</span>
+                <a href="{% url 'catalog:toggle-complete' task.id %}" class="btn btn-outline-success btn-sm ml-2">Complete</a>
               {% endif %}
-            </span>
-            <a href="{% url "catalog:toggle-complete" task.id %}" class="btn btn-success" style="float: right">Complete</a>
-          {% endif %}
-        </h4>
-        <small>
-          Created: {{ task.created_at }}
-          {% if task.deadline %}
-            <span style="color: #af0000; font-weight: bold">Deadline: {{ task.deadline }}</span>
-          {% endif %}
-        </small>
-        <p class="text-muted">Tags:
-        {% for tag in task.tags.all %}
-          #{{ tag }}
-        {% endfor %}
-        <a href="{% url "catalog:task-update" task.id %}">Update</a>
-        <a href="{% url "catalog:task-delete" task.id %}" style="color: red">Delete</a>
-        </p>
-        <hr>
-      </div>
-    {% endfor %}
+            </h4>
+          </div>
+          <small class="text-muted">
+            Created: {{ task.created_at }}
+            {% if task.deadline %}
+              <span class="text-danger font-weight-bold">Deadline: {{ task.deadline }}</span>
+            {% endif %}
+          </small>
+          <p class="mb-1 text-muted">
+            Tags:
+            {% for tag in task.tags.all %}
+              <span class="badge badge-primary">#{{ tag }}</span>
+            {% endfor %}
+          </p>
+          <div class="d-flex justify-content-end">
+            <a href="{% url 'catalog:task-update' task.id %}" class="btn btn-outline-info btn-sm mr-2">Update</a>
+            <a href="{% url 'catalog:task-delete' task.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
   </div>
 {% endblock %}

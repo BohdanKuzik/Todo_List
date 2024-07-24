@@ -1,23 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>
-    Tags
-    <a href="{% url 'catalog:tag-create' %}" class="btn btn-primary" style="float: right">Add</a>
-  </h1>
-  <br>
-  <table class="table">
-    <tr>
-      <th>Name</th>
-      <th>Update</th>
-      <th>Delete</th>
-    </tr>
-    {% for tag in tag_list %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">Tags</h1>
+    <a href="{% url 'catalog:tag-create' %}" class="btn btn-primary">Add</a>
+  </div>
+  
+  <table class="table table-hover table-striped">
+    <thead class="thead-dark">
       <tr>
-        <td>{{ tag }}</td>
-        <td><a href="{% url 'catalog:tag-update' tag.id %}" class="btn btn-primary">Update</a></td>
-        <td><a href="{% url 'catalog:tag-delete' tag.id %}" class="btn btn-danger">Delete</a></td>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
       </tr>
-    {% endfor %}
+    </thead>
+    <tbody>
+      {% for tag in tag_list %}
+        <tr>
+          <td>{{ tag }}</td>
+          <td><a href="{% url 'catalog:tag-update' tag.id %}" class="btn btn-outline-primary btn-sm">Update</a></td>
+          <td><a href="{% url 'catalog:tag-delete' tag.id %}" class="btn btn-outline-danger btn-sm">Delete</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
   </table>
 {% endblock %}

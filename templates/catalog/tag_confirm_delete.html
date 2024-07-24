@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Are you sure you want to delete <u>{{ tag }}</u>?</h1>
+  <hr>
+  <form method="post" action="" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Yes, delete" class="btn btn-danger">
+    <a href="{% url "catalog:tag-list" %}" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock %}

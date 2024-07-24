@@ -17,7 +17,7 @@
           {{ task }}
           {% if task.is_done %}
             <span style="color: green">Done</span>
-            <a href="" class="btn btn-secondary" style="float: right">Undo</a>
+            <a href="{% url "catalog:toggle-complete" task.id %}" class="btn btn-secondary" style="float: right">Undo</a>
           {% else %}
             <span style="color: red">
               Not done
@@ -25,7 +25,7 @@
                 | Past deadline!
               {% endif %}
             </span>
-            <a href="#" class="btn btn-success" style="float: right">Complete</a>
+            <a href="{% url "catalog:toggle-complete" task.id %}" class="btn btn-success" style="float: right">Complete</a>
           {% endif %}
         </h4>
         <small>
@@ -38,8 +38,8 @@
         {% for tag in task.tags.all %}
           #{{ tag }}
         {% endfor %}
-        <a href="#">Update</a>
-        <a href="#" style="color: red">Delete</a>
+        <a href="{% url "catalog:task-update" task.id %}">Update</a>
+        <a href="{% url "catalog:task-delete" task.id %}" style="color: red">Delete</a>
         </p>
         <hr>
       </div>

@@ -3,7 +3,7 @@
 {% block content %}
   <h1>
     Tags
-    <a href="#" class="btn btn-primary" style="float: right">Add</a>
+    <a href="{% url 'catalog:tag-create' %}" class="btn btn-primary" style="float: right">Add</a>
   </h1>
   <br>
   <table class="table">
@@ -15,8 +15,8 @@
     {% for tag in tag_list %}
       <tr>
         <td>{{ tag }}</td>
-        <td><a href="#" class="btn btn-light">Update</a></td>
-        <td><a href="#" class="btn btn-danger">Delete</a></td>
+        <td><a href="{% url 'catalog:tag-update' tag.id %}" class="btn btn-primary">Update</a></td>
+        <td><a href="{% url 'catalog:tag-delete' tag.id %}" class="btn btn-danger">Delete</a></td>
       </tr>
     {% endfor %}
   </table>

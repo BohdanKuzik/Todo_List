@@ -1,0 +1,11 @@
+body {
+    margin: 40px;
+}
+
+.col-sm-3 {
+    padding-right: 100px;
+}
+
+.list-group-item {
+    padding: 1.5rem 1.25rem;
+}

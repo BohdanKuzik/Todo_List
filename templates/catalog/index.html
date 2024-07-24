@@ -1,6 +1,48 @@
 {% extends "base.html" %}
-
+{% load crispy_forms_filters %}
 
 {% block content %}
-  <h1>Todo</h1>
+  <h1>
+    TODO List
+    <a href="#" class="btn btn-primary" style="float: right">Add task</a>
+  </h1>
+  <br>
+  <form method="get" action="">
+    {{ form|crispy }}
+  </form>
+  <div class="tasks-block">
+    {% for task in task_list %}
+      <div class="task">
+        <h4>
+          {{ task }}
+          {% if task.is_done %}
+            <span style="color: green">Done</span>
+            <a href="#" class="btn btn-secondary" style="float: right">Undo</a>
+          {% else %}
+            <span style="color: red">
+              Not done
+              {% if task.is_past_deadline %}
+                | Past deadline!
+              {% endif %}
+            </span>
+            <a href="#" class="btn btn-success" style="float: right">Complete</a>
+          {% endif %}
+        </h4>
+        <small>
+          Created: {{ task.created_at }}
+          {% if task.deadline %}
+            <span style="color: #af0000; font-weight: bold">Deadline: {{ task.deadline }}</span>
+          {% endif %}
+        </small>
+        <p class="text-muted">Tags:
+        {% for tag in task.tags.all %}
+          #{{ tag }}
+        {% endfor %}
+        <a href="#">Update</a>
+        <a href="#" style="color: red">Delete</a>
+        </p>
+        <hr>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}

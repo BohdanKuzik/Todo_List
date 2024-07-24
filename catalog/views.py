@@ -1,4 +1,5 @@
 from django.http import HttpResponseRedirect, HttpRequest
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
@@ -33,6 +34,29 @@ class TaskCreateView(generic.CreateView):
     model = Task
     form_class = TaskForm
     success_url = reverse_lazy("catalog:task-list")
+
+
+class TaskUpdateView(generic.UpdateView):
+    model = Task
+    form_class = TaskForm
+    success_url = reverse_lazy("catalog:task-list")
+
+
+class TaskDeleteView(generic.DeleteView):
+    model = Task
+    success_url = reverse_lazy("catalog:task-list")
+
+
+def toggle_complete_todo(
+        request: HttpRequest,
+        pk: int
+) -> HttpResponseRedirect:
+    task = get_object_or_404(Task, pk=pk)
+
+    task.is_done = not task.is_done
+    task.save()
+
+    return HttpResponseRedirect(reverse("catalog:task-list"))
 
 
 class TagListView(generic.ListView):

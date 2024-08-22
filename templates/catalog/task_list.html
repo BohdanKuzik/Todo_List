@@ -20,10 +20,10 @@
               {{ task }}
               {% if task.is_done %}
                 <span class="badge badge-success">Done</span>
-                <a href="{% url 'catalog:toggle-complete' task.id %}" class="btn btn-outline-secondary btn-sm ml-2">Undo</a>
+                <a href="{% url 'catalog:toggle-complete' pk=task.id %}" class="btn btn-outline-secondary btn-sm ml-2">Undo</a>
               {% else %}
                 <span class="badge badge-danger">Not done{% if task.is_past_deadline %} | Past deadline!{% endif %}</span>
-                <a href="{% url 'catalog:toggle-complete' task.id %}" class="btn btn-outline-success btn-sm ml-2">Complete</a>
+                <a href="{% url 'catalog:toggle-complete' pk=task.id %}" class="btn btn-outline-success btn-sm ml-2">Complete</a>
               {% endif %}
             </h4>
           </div>
@@ -40,8 +40,8 @@
             {% endfor %}
           </p>
           <div class="d-flex justify-content-end">
-            <a href="{% url 'catalog:task-update' task.id %}" class="btn btn-outline-info btn-sm mr-2">Update</a>
-            <a href="{% url 'catalog:task-delete' task.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+            <a href="{% url 'catalog:task-update' pk=task.id %}" class="btn btn-outline-info btn-sm mr-2">Update</a>
+            <a href="{% url 'catalog:task-delete' pk=task.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
           </div>
         </div>
       {% endfor %}
